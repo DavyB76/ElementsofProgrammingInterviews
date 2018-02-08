@@ -194,5 +194,46 @@ class Test_7_7_RemovingThekthLatestNode(unittest.TestCase):
         self.assertEqual(actualList.next.next.next.next.next.data, 7)
         self.assertEqual(actualList.next.next.next.next.next.next, None)
 
+
+def OddEvenSort(inputList):
+    DummyHead = ListNode(0, inputList)
+
+    previousCurrentNode = DummyHead
+    currentNode = DummyHead.next
+
+    while(currentNode != None):
+        nextNodeToInspect = currentNode.next
+
+        if currentNode.data % 2 == 0:
+            previousCurrentNode.next = currentNode.next
+            currentNode.next = DummyHead.next
+            DummyHead.next = currentNode
+
+        previousCurrentNode = currentNode
+        currentNode = nextNodeToInspect
+
+    return DummyHead.next
+
+
+class Test_7_10_OddEvenAlgo(unittest.TestCase):
+    def test_should_returnOddEvenList_when_a_four_node_list_is_processed(self):
+        firstNode = ListNode(1)
+        secondNode = ListNode(2)
+        thirdNode = ListNode(3)
+        fourthNode = ListNode(4)
+
+        firstNode.next = secondNode
+        secondNode.next = thirdNode
+        thirdNode.next = fourthNode
+
+        actualList = OddEvenSort(firstNode)
+
+        self.assertEqual(actualList.data, 4)
+        self.assertEqual(actualList.next.data, 2)
+        self.assertEqual(actualList.next.next.data, 1)
+        self.assertEqual(actualList.next.next.next.data, 3)
+        self.assertEqual(actualList.next.next.next.next, None)
+
+
 if __name__ == "__main__":
     unittest.main()
